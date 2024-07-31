@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+
+    <body>
+        <div style="text-align: center;">
+            <header class="title">
+                <!--Name should be inputted from login details-->
+                <h1>Welcome,<br /><span id="username"></span></h1>
+            </header>
+
+            <main>
+                <p>Your current diagnosis: VERTIGO</p>
+                <p>Find out more about <a href="https://www.pennmedicine.org/for-patients-and-visitors/patient-information/conditions-treated-a-to-z/vertigo#:~:text=Vertigo%20is%20a%20sensation%20of,world%20is%20spinning%20around%20them." target="_blank">VERTIGO</a> here.</p>
+                <div id="question">
+                    <p>Have you completed your tasks for the day?</p>
+                    <button type="button" onclick="completed_tasks(true)">Yes</button>
+                    <button type="submit" onclick="completed_tasks(false)">No</button>
+                </div>
+                <div id="message"></div>
+            </main>
+        </div>
+
+        <script src="dashboard.js"></script>
+    </body>
+
+</html>

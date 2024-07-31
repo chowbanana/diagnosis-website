@@ -1,0 +1,130 @@
+/*
+    COLOR PALETTE
+        Cape cod #424B4A // darkest
+        Moon Mist #DFE1D8 //almost white
+        Edward #AFB6B6 //almost gray
+        Bud #A6A894 // green yellow
+        Off-White #F6F6F6
+*/
+
+/* GLOBAL STYLES
+---------------------------------*/
+
+h1, h3{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background: #F6F6F6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.5;
+    min-height: 100vh; /*100% of viewport's height*/
+    flex-direction: column;
+}
+
+/* login.html
+-----------------------------------*/
+
+.login-container {
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /*vertical horizontal blur-effect */
+    padding: 10px 20px; /*top & bottom  left & right*/
+    transition: transform 0.2s;
+    /* width: 500px; */
+    text-align: center;
+}
+
+label {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    text-align: left;
+    color: #555;
+    font-weight: bold;
+}
+
+input {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    box-sizing: border-box; /*makes sure the input box is within the outer box*/
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    color: white;
+    cursor: pointer;
+    background-color: #FF4433;
+    width: 100%;
+    font-size: 16px;
+}
+
+.submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* radio button
+=================================================== */
+.diagnosis {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    /* font-size: 22px; */
+}
+
+/* covering old radio buttons */
+.diagnosis input {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+}
+
+/* creating custom radio button */
+.custom_radio {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    /* margin-top: 5px; */
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+/* adding grey color when hovering */
+.diagnosis:hover input ~.custom_radio{
+    background-color: #ccc;
+}
+
+/* adding blue color when button checked */
+.diagnosis input:checked ~.custom_radio{
+    background-color: #2196f3;
+}
+
+.custom_radio:after{
+    content:"";
+    position: absolute;
+    display: none;
+}
+
+/* dashboard.html
+-------------------------------------*/
+.title {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}

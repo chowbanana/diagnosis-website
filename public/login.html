@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
+    </head>
+
+    <body>
+        <div class="login-container">
+            <main>
+                <h1>Purabuks Enterprises</h1>
+                <h3>Enter your Login Credentials</h3>
+
+                <form onsubmit="event.preventDefault(); compare_username_password_to_database(); name_retrieval_login()">
+                    <label for="username">
+                        Username:
+                    </label>
+                    <input type="text" id="username" name="username" placeholder="Enter your Username" required>
+
+                    <label for="password">
+                        Password:
+                    </label>
+                    <input type="password" name="password" id="password" placeholder="Enter your Password" required>
+
+                    <div class="submit">
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+                <p>Not Registered? <a href="form.html">Create an account</a></p>
+                <p id="result"></p>
+                <script src="dashboard.js"></script>
+            </main>
+        </div>
+    </body>
+</html>
