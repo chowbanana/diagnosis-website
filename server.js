@@ -34,10 +34,10 @@ app.get('/', (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
+  const { id_num } = req.body;
 
   try {
-    const result = await pool.query('SELECT*FROM users WHERE username = $1 AND password = $2', [username, password]);
+    const result = await pool.query('SELECT*FROM patient_details WHERE id_num = $1', [id_num]);
     if (result.rows.length > 0){
       res.json({ success: true });
     } else {
@@ -49,17 +49,33 @@ app.post('/login', async (req, res) => {
   }
 })
 
+app.post('/user_details', async (req, res) => {
+  const { id_num } = req.body;
+  try{
+    const result = await pool.query('SELECT first_name FROM patient_details WHERE id_num = $1', [id_num]);
+    if (result.rows.length > 0) {
+      res.json({ success: true, user: result.rows[0] });
+    } else {
+      res.json({ success: false, message: 'User not found' });
+    }
+  } catch (error) {
+    console.error('Error executing query', error.stack);
+    res.status(500).send('Server error');
+  }
+
+});
+
 // Handle form submission
 app.post('/submit', (req, res) => {
   console.log('Form submitted successfully');
-  const { username, email, password } = req.body;
+  const { id_num, first_name, last_name, email, diagnosis } = req.body;
+  const default_password = "aaaaaaa";
+  // if (!username || !email || !password) {
+  //   return res.status(400).send('All fields are required');
+  // }
 
-  if (!username || !email || !password) {
-    return res.status(400).send('All fields are required');
-  }
-
-  const query = 'INSERT INTO users (username, password, email) VALUES ($1, $2, $3)';
-  const values = [username, password, email];
+  const query = 'INSERT INTO patient_details (id_num, first_name, last_name, email, diagnosis, password) VALUES ($1, $2, $3, $4, $5, $6)';
+  const values = [id_num, first_name, last_name, email, diagnosis, default_password];
 
   pool.query(query, values, (error, result) => {
     if (error) {
