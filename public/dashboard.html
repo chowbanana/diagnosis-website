@@ -19,7 +19,11 @@
                 <div id="question">
                     <p>Have you completed your tasks for the day?</p>
                     <button type="button" onclick="completed_tasks(true)">Yes</button>
-                    <button type="submit" onclick="completed_tasks(false)">No</button>
+                    <button type="submit" onclick="add_feedback_box()">No</button>
+                    <div id="feedback_box" style="display:none">
+                        <textarea name="feedback" id="feedback" rows="4" cols="50"></textarea>
+                        <button type="submit" onclick="add_comment()">Submit</button>
+                    </div>
                 </div>
                 <div id="message"></div>
             </main>

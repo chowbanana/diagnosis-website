@@ -11,8 +11,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
 
-app.use(express.static(__dirname + '/public'));
-
 // Set up PostgreSQL connection
 const pool = new Pool({
   user: 'postgres',
@@ -52,7 +50,7 @@ app.post('/login', async (req, res) => {
 app.post('/user_details', async (req, res) => {
   const { id_num } = req.body;
   try{
-    const result = await pool.query('SELECT first_name FROM patient_details WHERE id_num = $1', [id_num]);
+    const result = await pool.query('SELECT first_name, last_name FROM patient_details WHERE id_num = $1', [id_num]);
     if (result.rows.length > 0) {
       res.json({ success: true, user: result.rows[0] });
     } else {
@@ -63,6 +61,31 @@ app.post('/user_details', async (req, res) => {
     res.status(500).send('Server error');
   }
 
+});
+
+app.post('/add_comment', (req, res) => {
+  const {first_name, last_name, comment} = req.body;
+  const add = 'INSERT INTO patient_comments (first_name, last_name, comment) VALUES ($1, $2, $3)';
+  const values = [first_name, last_name, comment];
+
+  pool.query(add, values, (error, result) => {
+    if (error) {
+      console.error('Error executing query', error.stack);
+      res.status(500).send('Error saving data');
+    } else {
+      console.log('Query result:', result);
+    }
+  });
+});
+
+app.get('/api/patient_comments', async (req,res) => {
+  try {
+    const display = await pool.query('SELECT * FROM patient_comments');
+    res.json(display.rows);
+  } catch (error) {
+    console.error('Error executing query', error.stack);
+    res.status(500).send('Server error');
+  }
 });
 
 // Handle form submission
@@ -87,6 +110,8 @@ app.post('/submit', (req, res) => {
     }
   });
 });
+
+app.use(express.static(__dirname + '/public'));
 
 // Start the server
 const port = 5500;
