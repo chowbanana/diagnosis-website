@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { Pool } = require('pg');
-const path = require('path');
 
 // Create a new express application
 const app = express();
@@ -32,11 +31,14 @@ app.get('/', (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
-  const { id_num } = req.body;
+  const id = req.body.id_num;
+  const id_num = {id_num : id};
 
   try {
-    const result = await pool.query('SELECT*FROM patient_details WHERE id_num = $1', [id_num]);
+    const result = await pool.query('SELECT*FROM patient_details WHERE id_num = $1', [id]);
     if (result.rows.length > 0){
+      // const token = jwt.sign(id_num, process.env.ACCESS_TOKEN_SECRET);
+      // console.log(token);
       res.json({ success: true });
     } else {
       res.json({ success: false });
@@ -47,12 +49,28 @@ app.post('/login', async (req, res) => {
   }
 })
 
-app.post('/user_details', async (req, res) => {
+app.post('/api/user_details', async (req, res) => {
   const { id_num } = req.body;
   try{
     const result = await pool.query('SELECT first_name, last_name FROM patient_details WHERE id_num = $1', [id_num]);
     if (result.rows.length > 0) {
       res.json({ success: true, user: result.rows[0] });
+    } else {
+      res.json({ success: false, message: 'User not found' });
+    }
+  } catch (error) {
+    console.error('Error executing query', error.stack);
+    res.status(500).send('Server error');
+  }
+
+});
+
+app.post('/api/user_diagnosis', async (req, res) => {
+  const { id_num } = req.body;
+  try{
+    const result = await pool.query('SELECT diagnosis FROM patient_details WHERE id_num = $1', [id_num]);
+    if (result.rows.length > 0) {
+      res.json({ success: true, diagnosis: result.rows[0] });
     } else {
       res.json({ success: false, message: 'User not found' });
     }
@@ -88,17 +106,29 @@ app.get('/api/patient_comments', async (req,res) => {
   }
 });
 
+app.post('/api/maneuver_video', async (req, res) => {
+  const { id_num } = req.body;
+  try {
+    const result = await pool.query('SELECT maneuver FROM patient_details WHERE id_num = $1', [id_num]);
+    if (result.rows.length > 0) {
+      res.json({success: true, maneuver: result.rows[0].maneuver, message: 'Video found'});
+    } else{
+      res.json({success: false, message: 'No video found'});
+    }
+  } catch (error) {
+    console.error('Error execusting query', error.stack);
+    res.status(500).send('Server error');
+  }
+})
+
 // Handle form submission
 app.post('/submit', (req, res) => {
-  console.log('Form submitted successfully');
-  const { id_num, first_name, last_name, email, diagnosis } = req.body;
+  const { id_num, first_name, last_name, email, symptoms, diagnosis, maneuver, advice } = req.body;
   const default_password = "aaaaaaa";
-  // if (!username || !email || !password) {
-  //   return res.status(400).send('All fields are required');
-  // }
 
-  const query = 'INSERT INTO patient_details (id_num, first_name, last_name, email, diagnosis, password) VALUES ($1, $2, $3, $4, $5, $6)';
-  const values = [id_num, first_name, last_name, email, diagnosis, default_password];
+  const query = 'INSERT INTO patient_details (id_num, first_name, last_name, email, symptoms, diagnosis, maneuver, advice, password) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)';
+  const values = [id_num, first_name, last_name, email, symptoms, diagnosis, maneuver, advice, default_password];
+  console.log(values);
 
   pool.query(query, values, (error, result) => {
     if (error) {
@@ -111,6 +141,7 @@ app.post('/submit', (req, res) => {
   });
 });
 
+app.use('/videos', express.static('videos'));
 app.use(express.static(__dirname + '/public'));
 
 // Start the server

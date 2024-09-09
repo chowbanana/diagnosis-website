@@ -78,7 +78,7 @@ button {
 
 /* radio button
 =================================================== */
-.diagnosis {
+.maneuver {
     display: block;
     position: relative;
     padding-left: 35px;
@@ -88,7 +88,7 @@ button {
 }
 
 /* covering old radio buttons */
-.diagnosis input {
+.maneuver input {
     position: absolute;
     opacity: 0;
     height: 0;
@@ -108,12 +108,12 @@ button {
 }
 
 /* adding grey color when hovering */
-.diagnosis:hover input ~.custom_radio{
+.maneuver:hover input ~.custom_radio{
     background-color: #ccc;
 }
 
 /* adding blue color when button checked */
-.diagnosis input:checked ~.custom_radio{
+.maneuver input:checked ~.custom_radio{
     background-color: #2196f3;
 }
 

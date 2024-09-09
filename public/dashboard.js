@@ -44,31 +44,6 @@ function name_retrieval_form() {
     window.location.href = 'dashboard.html';
 }
 
-// function name_retrieval_login(){
-//     document.addEventListener('DOMContentLoaded', () => {
-//         document.getElementById('first_name').textContent = localStorage.getItem('first_name');
-//     });
-// }
-
-// function display_comments(){
-//     fetch('/patient_comments', {
-//         method: 'GET',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         }
-//     })
-
-//     .then(data => {
-//         const comments = document.getElementById('comments');
-//         if (data.success) {
-//             const display_comments = data.comments;
-//             comments.textContent = `{display_comments}`;
-//         } else {
-
-//         }
-//     })
-// }
-
 document.addEventListener('DOMContentLoaded', () => {
     fetch('/api/patient_comments')
         .then (response => {
@@ -109,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     const id_num = localStorage.getItem('id_num');
-    fetch('/user_details',{
+    fetch('/api/user_details',{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -142,46 +117,63 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 })
 
-function password_match(input){
-    const initial_password = document.getElementById('password').value;
-
-    if (input.value != initial_password){
-        input.setCustomValidity('Password does not match');
-    } else {
-        input.setCustomValidity('');
-    }
-}
-
-function compare_username_password_to_database() {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-
-    fetch('/login',{
+document.addEventListener('DOMContentLoaded', () => {
+    const id_num = localStorage.getItem('id_num');
+    fetch('/api/user_diagnosis',{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({username, password})
+        body: JSON.stringify({id_num})
     })
 
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response failed');
+        }
+        return response.json();
+    })
+
     .then(data => {
-        const resultElement = document.getElementById('result');
-        if (data.success){
-            resultElement.textContent = 'Login Successful!';
-            window.location.href = 'dashboard.html';
+        const user_diagnosis_element = document.getElementById('user_diagnosis');
+        if (data.success) {
+            const userDiagnosis = data.diagnosis;
+            user_diagnosis_element.textContent = `${userDiagnosis.diagnosis}`;
         } else {
-            console.log('Login Failed');
-            resultElement.textContent = 'Invalid username or password';
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
+            user_diagnosis_element.textContent = 'Failed to load user diagnosis';
         }
     })
 
     .catch(error => {
-        console.error('Error: ', error);
+        console.error('Error fetching user details:', error);
+        document.getElementById('user_details').textContent = 'Error fetching user details';
     });
-}
+})
+
+document.addEventListener('DOMContentLoaded', () => {
+    const id_num = localStorage.getItem('id_num');
+
+    fetch('/api/maneuver_video',{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({id_num})
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success){
+                const video_source = document.getElementById('video_source');
+                video_source.src = "videos/" + data.maneuver + ".mp4";
+                // console.log(video_source.src);
+                document.getElementById('video_player').load();
+            } else {
+                alert('Video not Found!');
+            }
+        })
+
+        .catch(error => console.error('Error:', error));
+})
 
 function compare_id_num_to_database() {
     const id_num = document.getElementById('id_num').value;
@@ -200,6 +192,7 @@ function compare_id_num_to_database() {
         const resultElement = document.getElementById('result');
         if (data.success){
             resultElement.textContent = 'Login Successful!';
+            // localStorage.setItem('token', data.token);
             window.location.href = 'dashboard.html';
         } else {
             console.log('Login Failed');

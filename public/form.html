@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="css/styles.css">
+        <link rel="stylesheet" href="assets/css/main.css" />
     </head>
 
     <body>
@@ -25,50 +26,74 @@
                 </label>
                 <input type="text" id="id_num" name="id_num" placeholder="Enter your IC/Passport Number" required>
 
-                <!-- <label for="username">
-                    Username:
-                </label>
-                <input type="text" id="username" name="username" placeholder="Enter your username" required> -->
-
-                <!-- <label for="password">
-                    Password:
-                </label>
-                <input type="password" name="password" id="password" placeholder="Enter your Password" required>
-
-                <label for="confirm_password">
-                    Reenter Password:
-                </label>
-                <input type="password" name="confirm_password" id="confirm_password" oninput="password_match(this)" placeholder="Reenter your Password" required> -->
-
                 <label for="email">
                     Email:
                 </label>
                 <input type="email" name="email" id="email" placeholder="Enter your email" required>
 
+                <label for="symptoms">
+                    Symptoms:
+                </label>
+                <input type="text" name="symptoms" id="symptoms" placeholder="Enter your symptoms" required>
+
                 <label for="diagnosis">
-                    What is the diagnosis?
+                    Diagnosis:
+                </label>
+                <input type="text" name="diagnosis" id="diagnosis" placeholder="Enter your diagnosis" required>
+
+                <label for="maneuver">
+                    What is the Maneuver?
                 </label>
 
-                <label class="diagnosis">
-                    Diagnosis 1
-                    <input type="radio" name="diagnosis" value="diagnosis 1">
+                <label class="maneuver">
+                    Right Canal Zuma Maneuver
+                    <input type="radio" name="maneuver" value="right_canal_zuma">
                     <span class="custom_radio"></span>
                 </label>
 
-                <label class="diagnosis">
-                    Diagnosis 2
-                    <input type="radio" name="diagnosis" value="diagnosis 2">
+                <label class="maneuver">
+                    Left Canal Zuma Maneuver
+                    <input type="radio" name="maneuver" value="left_canal_zuma">
                     <span class="custom_radio"></span>
                 </label>
 
-                <label class="diagnosis">
-                    Diagnosis 3
-                    <input type="radio" name="diagnosis" value="diagnosis 3">
+                <label class="maneuver">
+                    Right Posterior Canal Semount Maneuver
+                    <input type="radio" name="maneuver" value="right_posterior_canal_semount">
                     <span class="custom_radio"></span>
                 </label>
+
+                <label class="maneuver">
+                    Left Posterior Canal Semount Maneuver
+                    <input type="radio" name="maneuver" value="left_posterior_canal_semount">
+                    <span class="custom_radio"></span>
+                </label>
+
+                <label class="maneuver">
+                    Right Posterior Canal Epley Maneuver
+                    <input type="radio" name="maneuver" value="right_posterior_canal_epley">
+                    <span class="custom_radio"></span>
+                </label>
+
+                <label class="maneuver">
+                    Left Posterior Canal Epley Maneuver
+                    <input type="radio" name="maneuver" value="left_posterior_canal_epley">
+                    <span class="custom_radio"></span>
+                </label>
+
+                <label class="maneuver">
+                    Bangalore Maneuver for Anterior Canal BPPV for both sides
+                    <input type="radio" name="maneuver" value="bangalore_anterior_canal_BPPV_both_sides">
+                    <span class="custom_radio"></span>
+                </label>
+
+                <label for="advice">
+                    Advice:
+                </label>
+                <input type="text" name="advice" id="advice" placeholder="Enter your advice" required>
 
                 <div class="submit">
-                    <button type="submit" onsubmit="name_retrieval_form()">Submit</button>
+                    <button type="submit" onsubmit="dashboard()">Submit</button>
                 </div>
 
                 <div id="message"></div>

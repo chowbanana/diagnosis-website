@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="assets/css/main.css" />
     </head>
 
     <body>
@@ -14,9 +15,14 @@
             </header>
 
             <main>
-                <p>Your current diagnosis: VERTIGO</p>
-                <p>Find out more about <a href="https://www.pennmedicine.org/for-patients-and-visitors/patient-information/conditions-treated-a-to-z/vertigo#:~:text=Vertigo%20is%20a%20sensation%20of,world%20is%20spinning%20around%20them." target="_blank">VERTIGO</a> here.</p>
+                <p>Your current diagnosis: <span id="user_diagnosis"></span></p>
+                <p>Find out more about <a href="diagnosis_details.html" target="_blank">your specific diagnosis</a> here.</p>
+                <p>Find out more about <a href="information.html" target="_blank">VESTIBULAR DISORDERS</a> in general here.</p>
                 <div id="question">
+                    <video id="video_player" width="640" height="480" controls>
+                        <source id="video_source" src="" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                     <p>Have you completed your tasks for the day?</p>
                     <button type="button" onclick="completed_tasks(true)">Yes</button>
                     <button type="submit" onclick="add_feedback_box()">No</button>
