@@ -13,9 +13,9 @@ app.use(bodyParser.json());
 // Set up PostgreSQL connection
 const pool = new Pool({
   user: 'postgres',
-  host: '127.0.0.1',
-  database: 'form_database',
-  password: 'iloveestonia',
+  host: 'badly-beautified-walrus.data-1.use1.tembo.io',
+  database: 'postgres',
+  password: 'VJeLLrpBPsRo7lqH',
   port: 5432,
 });
 
