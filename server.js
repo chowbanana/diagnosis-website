@@ -27,7 +27,7 @@ app.get('/:page', (req, res) => {
 
 // Serve the HTML form
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public' + '/login.html');
+  res.sendFile(__dirname + '/public' + '/index.html');
 });
 
 app.post('/login', async (req, res) => {
