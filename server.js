@@ -17,6 +17,9 @@ const pool = new Pool({
   database: 'postgres',
   password: 'VJeLLrpBPsRo7lqH',
   port: 5432,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 // To get all the other HTML files
@@ -136,7 +139,7 @@ app.post('/submit', (req, res) => {
       res.status(500).send('Error saving data');
     } else {
       console.log('Query result:', result);
-      res.redirect('/dashboard.html');
+      res.status(0).send('Data saved successfully. Please have patient login with their provided ID number.');
     }
   });
 });
@@ -145,7 +148,8 @@ app.use('/videos', express.static('videos'));
 app.use(express.static(__dirname + '/public'));
 
 // Start the server
-const port = 5500;
-app.listen(port, () => {
-  console.log(`Server is running on http://127.0.0.1:${port}/`);
+const port = process.env.PORT || 5500;
+// const port = 5500;
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Server is running on port ${port}`);
 });
